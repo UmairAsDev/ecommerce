@@ -3,6 +3,17 @@
 
 
 {% block content %}
+<!-- Include highlight.js CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+
+<!-- Include highlight.js JS -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Include prism.js CSS and JS from static folder -->
+<link rel="stylesheet" href="{% static 'assets/css/prism.css' %}">
+<script src="{% static 'assets/js/prism.js' %}"></script>
+
 
 <main class="main">
     <div class="page-header breadcrumb-wrap">

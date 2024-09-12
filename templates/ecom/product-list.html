@@ -28,18 +28,11 @@
                                     <h5 class="mb-30">By Categories</h5>
                                     <div class="categories-dropdown-wrap font-heading">
                                         <ul>
+                                            {% for c in categories %}
                                             <li>
-                                                <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-1.svg" alt="" />Milks and Dairies</a>
+                                                <a href="{% url 'ecom:category_list' %}"> <img src="{{c.image.url}}" alt="" />{{c.title}}</a>
                                             </li>
-                                            <li>
-                                                <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-2.svg" alt="" />Clothing &amp; beauty</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-3.svg" alt="" />Pet Foods &amp; Toy</a>
-                                            </li>
-                                            <li class="mb-0">
-                                                <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-4.svg" alt="" />Baking material</a>
-                                            </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
