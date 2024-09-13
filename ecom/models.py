@@ -193,7 +193,7 @@ class ProductReview(models.Model):
         return mark_safe('<img src = "%s" width = "50" height = "50" />' %(self.image.url))
     
     def __str__(self):
-        return self.product.title()
+        return self.product.title
     
     def get_rating(self):
         return self.rating
