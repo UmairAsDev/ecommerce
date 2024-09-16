@@ -292,8 +292,11 @@
                                                                             <div class="d-flex align-items-center">
                                                                                 <span class="font-xs text-muted">{{r.date|date:"d M, Y"}}</span>
                                                                             </div>
-                                                                            <div class="product-rate d-inline-block">
-                                                                                <div class="product-rating" style="width: 100%"></div>
+                                                                        </br>
+                                                                            <div class="">
+                                                                                {% for s in r.rating|ljust:r.rating  %}
+                                                                                <i class="fas fa-star text-warning"></i>
+                                                                                {% endfor %}
                                                                             </div>
                                                                         </div>
                                                                         <p class="mb-10">{{r.review}}</p>

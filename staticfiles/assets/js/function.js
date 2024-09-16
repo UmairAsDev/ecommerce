@@ -1,8 +1,10 @@
-console.log('working fine')
+const monthNames = ["Jan", "Feb", "March", "April", "June", "July", "August", "September", "October", "November", "December"];
 
 $("#commentForm").submit(function(e){ 
     e.preventDefault(); 
 
+    let dt = newDate();
+    let time = dt.getDay() + " " + monthNames[dt.getUTCMonth()] + ", " + dt.getFullYear();
     $.ajax({
         data: $(this).serialize(), 
         method: $(this).attr("method"), 
@@ -30,7 +32,7 @@ $("#commentForm").submit(function(e){
                 _html += '</div>';
 
                 // Generate stars for the rating
-                for(let i = 1; i < response.context.rating; i++) { // Loop through all ratings
+                for(let i = 0; i < response.context.rating; i++) { // Loop through all ratings
                     _html += '<i class="fas fa-star text-warning"></i>';
                 }
 
