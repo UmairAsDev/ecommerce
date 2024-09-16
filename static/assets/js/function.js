@@ -1,10 +1,8 @@
-const monthNames = ["Jan", "Feb", "March", "April", "June", "July", "August", "September", "October", "November", "December"];
+console.log('working fine')
 
 $("#commentForm").submit(function(e){ 
     e.preventDefault(); 
 
-    let dt = newDate();
-    let time = dt.getDay() + " " + monthNames[dt.getUTCMonth()] + ", " + dt.getFullYear();
     $.ajax({
         data: $(this).serialize(), 
         method: $(this).attr("method"), 

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.db.models import Count, Avg
 from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
-from ecom.forms import ProductReviewForm
+from ecom.forms import ProductReviewForm 
 # Create your views here.
 
 def index(request):
@@ -72,6 +72,14 @@ def product_detail_view(request, pid):
     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
     # Product Reviews
     review_form = ProductReviewForm()
+    make_review = True
+    if request.user.is_authenticated:
+        user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+        
+        if user_review_count > 0:
+            make_review = False
+            
+            
     p_images = product.p_images.all()
     
     context = {
@@ -79,6 +87,7 @@ def product_detail_view(request, pid):
         'p_images':p_images,
         'products':products,
         'reviews' :reviews,
+        'make_review':make_review,
         'average_rating':average_rating,
         'review_form':review_form,
         'tags': product.tags.all(),

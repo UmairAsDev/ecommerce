@@ -339,6 +339,8 @@
                                                 </div>
                                             </div>
                                             <!--comment form-->
+                                            {% if request.user.is_authenticated %}
+                                            {% if make_review == True %}
                                             <div class="comment-form">
                                                 <h4 class="mb-15 add-review" >Add a review</h4>
                                                 <strong class="text-success" id="review-res"></strong>
@@ -381,6 +383,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% endif %}
+                                        {% endif %}
                                         </div>
                                     </div>
                                 </div>
