@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # Third Party Apps
     'taggit',
     'ckeditor',
+    'fontawesomefree',
+
     # Custom app
     'ecom',
     'userauths',
