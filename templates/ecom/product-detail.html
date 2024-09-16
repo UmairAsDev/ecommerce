@@ -137,7 +137,7 @@
                                             <a class="nav-link" id="Vendor-info-tab" data-bs-toggle="tab" href="#Vendor-info">Vendor</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews (3)</a>
+                                            <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews ({{reviews.count}})</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content shop_info_tab entry-main-content">
@@ -280,63 +280,27 @@
                                                     <div class="col-lg-8">
                                                         <h4 class="mb-30">Customer questions & answers</h4>
                                                         <div class="comment-list">
+                                                            {% for r in reviews %}
                                                             <div class="single-comment justify-content-between d-flex mb-30">
                                                                 <div class="user justify-content-between d-flex">
                                                                     <div class="thumb text-center">
                                                                         <img src="{% static 'assets/imgs/blog/author-2.png' %}" alt="" />
-                                                                        <a href="#" class="font-heading text-brand">Sienna</a>
+                                                                        <a href="#" class="font-heading text-brand">{{r.user.username|title}}</a>
                                                                     </div>
                                                                     <div class="desc">
                                                                         <div class="d-flex justify-content-between mb-10">
                                                                             <div class="d-flex align-items-center">
-                                                                                <span class="font-xs text-muted">December 4, 2024 at 3:12 pm </span>
+                                                                                <span class="font-xs text-muted">{{r.date|date:"d M, Y"}}</span>
                                                                             </div>
                                                                             <div class="product-rate d-inline-block">
                                                                                 <div class="product-rating" style="width: 100%"></div>
                                                                             </div>
                                                                         </div>
-                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
+                                                                        <p class="mb-10">{{r.review}}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="single-comment justify-content-between d-flex mb-30 ml-30">
-                                                                <div class="user justify-content-between d-flex">
-                                                                    <div class="thumb text-center">
-                                                                        <img src="{% static 'assets/imgs/blog/author-3.png' %}" alt="" />
-                                                                        <a href="#" class="font-heading text-brand">Brenna</a>
-                                                                    </div>
-                                                                    <div class="desc">
-                                                                        <div class="d-flex justify-content-between mb-10">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <span class="font-xs text-muted">December 4, 2024 at 3:12 pm </span>
-                                                                            </div>
-                                                                            <div class="product-rate d-inline-block">
-                                                                                <div class="product-rating" style="width: 80%"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="single-comment justify-content-between d-flex">
-                                                                <div class="user justify-content-between d-flex">
-                                                                    <div class="thumb text-center">
-                                                                        <img src="{% static 'assets/imgs/blog/author-4.png' %}" alt="" />
-                                                                        <a href="#" class="font-heading text-brand">Gemma</a>
-                                                                    </div>
-                                                                    <div class="desc">
-                                                                        <div class="d-flex justify-content-between mb-10">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <span class="font-xs text-muted">December 4, 2024 at 3:12 pm </span>
-                                                                            </div>
-                                                                            <div class="product-rate d-inline-block">
-                                                                                <div class="product-rating" style="width: 80%"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -345,7 +309,7 @@
                                                             <div class="product-rate d-inline-block mr-15">
                                                                 <div class="product-rating" style="width: 90%"></div>
                                                             </div>
-                                                            <h6>4.8 out of 5</h6>
+                                                            <h6>{{average_rating.rating|floatformat:1}} out of 5.0</h6>
                                                         </div>
                                                         <div class="progress">
                                                             <span>5 star</span>
@@ -373,18 +337,25 @@
                                             </div>
                                             <!--comment form-->
                                             <div class="comment-form">
-                                                <h4 class="mb-15">Add a review</h4>
-                                                <div class="product-rate d-inline-block mb-30"></div>
+                                                <h4 class="mb-15 add-review" >Add a review</h4>
+                                                <strong class="text-success" id="review-res"></strong>
+                                                {% comment %} <div class="product-rate d-inline-block mb-30"></div> {% endcomment %}
                                                 <div class="row">
                                                     <div class="col-lg-8 col-md-12">
-                                                        <form class="form-contact comment_form" action="#" id="commentForm">
+                                                        <form class="form-contact comment_form hide-comment-form" action="{% url 'ecom:ajax-add-review' product.id %}" id="commentForm" method = "POST">
+                                                            {% csrf_token %}
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                                                                        {{review_form.review}}
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6s">
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        {{review_form.rating}}
+                                                                    </div>
+                                                                </div>
+                                                                {% comment %} <div class="col-sm-6s">
                                                                     <div class="form-group">
                                                                         <input class="form-control" name="name" id="name" type="text" placeholder="Name" />
                                                                     </div>
@@ -398,7 +369,7 @@
                                                                     <div class="form-group">
                                                                         <input class="form-control" name="website" id="website" type="text" placeholder="Website" />
                                                                     </div>
-                                                                </div>
+                                                                </div> {% endcomment %}
                                                             </div>
                                                             <div class="form-group">
                                                                 <button type="submit" class="button button-contactForm">Submit Review</button>

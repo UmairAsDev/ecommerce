@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Count
+from django.http import JsonResponse
+from django.db.models import Count, Avg
 from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
+from ecom.forms import ProductReviewForm
 # Create your views here.
 
 def index(request):
@@ -61,15 +63,24 @@ def vendor_detail_list(request, vid):
 
 def product_detail_view(request, pid):
     product = Products.objects.get(pid=pid)
+    # product = get_object_or_404(Products, pid=pid)
     products = Products.objects.filter(category=product.category).exclude(pid=pid)
     
-    # product = get_object_or_404(Products, pid=pid)
+    # Get all Reviews
+    reviews = ProductReview.objects.filter(product=product).order_by("-date")
+    # Getting Average Reviews
+    average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+    # Product Reviews
+    review_form = ProductReviewForm()
     p_images = product.p_images.all()
     
     context = {
         'product': product,
         'p_images':p_images,
         'products':products,
+        'reviews' :reviews,
+        'average_rating':average_rating,
+        'review_form':review_form,
         'tags': product.tags.all(),
     }
     return render(request, 'ecom/product-detail.html', context)
@@ -87,3 +98,30 @@ def tag_list(request, tag_slug=None):
         'tag':tag,
     }
     return render(request, 'ecom/tag.html', context)
+
+
+def ajax_add_review(request, pid):
+    product = Products.objects.get(pk=pid)
+    user = request.user
+    review = ProductReview.objects.create(
+        user = user,
+        product = product,
+        review = request.POST['review'],
+        rating = request.POST['rating'],
+    )
+    
+    context = {
+        'user': user.username,
+        'review' : request.POST['review'],
+        'rating' : request.POST['rating'],
+    }
+    
+    average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+    
+    return JsonResponse(
+        {
+            'bool': True,
+            'context': context,
+            'average_rating' : average_rating,
+        }
+    )
