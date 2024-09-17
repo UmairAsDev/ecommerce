@@ -134,3 +134,23 @@ def ajax_add_review(request, pid):
             'average_rating' : average_rating,
         }
     )
+
+
+
+def search_view(request):
+    query = request.GET.get("q", "")  
+    if query: 
+        products = Products.objects.filter(
+            title__icontains=query, 
+            description__icontains=query
+        ).order_by("-date")
+    else:
+        products = Products.objects.none() 
+
+    context = {
+        "products": products,
+        "query": query,
+    }
+
+    return render(request, 'ecom/search.html', context)
+
