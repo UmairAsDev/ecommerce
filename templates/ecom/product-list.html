@@ -30,7 +30,7 @@
                                         <ul>
                                             {% for c in categories %}
                                             <li>
-                                                <input class="form-check-input filter-checkbox" type="checkbox" data-filter= "Category" name="checkbox" id="exampleCheckbox1" value="{{c.id}}" />
+                                                <input class="form-check-input filter-checkbox" type="checkbox" data-filter= "Category" name="checkbox" id="exampleCheckbox2" value="{{c.id}}" />
                                                 &nbsp;&nbsp;&nbsp;
                                                 <a href="{% url 'ecom:category_product_list' c.cid %}"> <img src="{{c.image.url}}" alt="" />{{c.title}}</a>
                                             </li>
@@ -43,9 +43,10 @@
                                 <div class="card">
                                     <h5 class="mb-30">By Vendors</h5>
                                     <div class="d-flex">
-                                        <div class="custome-checkbox mr-80">
+                                        <div class="customeee-checkbox mr-80">
                                             {% for v in vendors %}
-                                            <input class="form-check-input filter-checkbox" type="checkbox" data-filter = "Vendor" name="checkbox" id="exampleCheckbox1" value="{{v.id}}" />
+                                            <input class="form-check-input filter-checkbox" type="checkbox" data-filter = "vendor" name="checkbox" id="exampleCheckbox1" value="{{v.id}}" />
+                                            &nbsp;&nbsp;&nbsp;
                                             <label class="form-check-label" for="exampleCheckbox1"><span>{{v.title}}</span></label>
                                             <br />
                                             {% endfor %}
@@ -227,7 +228,7 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img">
                                             <a href="shop-product-right.html">
-                                                <img src="assets/imgs/banner/banner-5.png" alt="" />
+                                                <img src="{% static 'assets/imgs/banner/banner-5.png' %}" alt="" />
                                             </a>
                                         </div>
                                     </div>
@@ -264,7 +265,7 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img">
                                             <a href="shop-product-right.html">
-                                                <img src="assets/imgs/banner/banner-6.png" alt="" />
+                                                <img src="{% static 'assets/imgs/banner/banner-6.png' %}" alt="" />
                                             </a>
                                         </div>
                                     </div>
@@ -301,7 +302,7 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img">
                                             <a href="shop-product-right.html">
-                                                <img src="assets/imgs/banner/banner-7.png" alt="" />
+                                                <img src="{% static 'assets/imgs/banner/banner-7.png' %}" alt="" />
                                             </a>
                                         </div>
                                     </div>
@@ -338,7 +339,7 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img">
                                             <a href="shop-product-right.html">
-                                                <img src="assets/imgs/banner/banner-8.png" alt="" />
+                                                <img src="{% static 'assets/imgs/banner/banner-8.png' %}" alt="" />
                                             </a>
                                         </div>
                                     </div>

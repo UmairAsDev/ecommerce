@@ -27,6 +27,10 @@ urlpatterns = [
     
     # Search
     path("search/",views.search_view, name='search'),
+    
+    # Async product-filter
+    
+    path("filter-products/", views.filter_product, name="filter-product")
 
 ]
 
