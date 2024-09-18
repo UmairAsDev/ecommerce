@@ -4,6 +4,7 @@ from django.db.models import Count, Avg
 from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
+from django.db.models import Q
 # Create your views here.
 
 def index(request):
@@ -137,15 +138,15 @@ def ajax_add_review(request, pid):
 
 
 
+
 def search_view(request):
-    query = request.GET.get("q", "")  
-    if query: 
+    query = request.GET.get("q", "")  # Default to an empty string if 'q' is None
+    if query:  # Check if query is not empty
         products = Products.objects.filter(
-            title__icontains=query, 
-            description__icontains=query
+            Q(title__icontains=query) | Q(description__icontains=query)  # Use OR condition
         ).order_by("-date")
     else:
-        products = Products.objects.none() 
+        products = Products.objects.none()  # No results if query is empty or None
 
     context = {
         "products": products,
@@ -153,4 +154,5 @@ def search_view(request):
     }
 
     return render(request, 'ecom/search.html', context)
+
 
