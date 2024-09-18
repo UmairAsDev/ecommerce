@@ -149,7 +149,7 @@
                                 <ul>
                                     {% for c in categories %}
                                     <li>
-                                        <a href="shop-grid-right.html"> <img src="{{c.image.url}}" alt="" />{{c.title}}</a><span class="count">{{c.category.count}}</span>
+                                        <a href="{% url 'ecom:category_product_list' c.cid %}"> <img src="{{c.image.url}}" alt="" />{{c.title}}</a><span class="count">{{c.category.count}}</span>
                                     </li>
                                     {% endfor %}
                                     {% comment %} <li>
