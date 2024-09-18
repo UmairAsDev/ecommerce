@@ -386,15 +386,12 @@
                                         <a href="{% url "ecom:products_list" %}">Shop</a>
                                     </li>
                                     <li>
-                                        <a href="#">Vendors <i class="fi-rs-angle-down"></i></a>
+                                        <a href="{% url 'ecom:vendor_list' %}">Vendors <i class="fi-rs-angle-down"></i></a>
+                                        {% for v in vendors %}
                                         <ul class="sub-menu">
-                                            <li><a href="vendors-grid.html">Vendors Grid</a></li>
-                                            <li><a href="{% url 'ecom:vendor_list' %}">Vendors List</a></li>
-                                            <li><a href="vendor-details-1.html">Vendor Details 01</a></li>
-                                            <li><a href="vendor-details-2.html">Vendor Details 02</a></li>
-                                            <li><a href="vendor-dashboard.html">Vendor Dashboard</a></li>
-                                            <li><a href="vendor-guide.html">Vendor Guide</a></li>
+                                            <li><a href="{% url 'ecom:vendor_detail' v.vid %}">{{v.title}}</a></li>
                                         </ul>
+                                        {% endfor %}
                                     </li>
                                     <li class="position-static">
                                         <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
