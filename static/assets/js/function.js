@@ -60,54 +60,36 @@ $("#commentForm").submit(function(e) {
 
 
 
-$(document).ready(function() {
-    $(".filter-checkbox").on("click", function() {
+$(document).ready(function(){
+    $(".filter-checkbox").on("click", function(){
         console.log("A checkbox has been checked...");
 
         let filter_object = {};
 
-        // Iterate over each checkbox to build the filter object
-        $(".filter-checkbox").each(function() {
-            let filter_value = $(this).val();
-            let filter_key = $(this).data("filter");
+        $(".filter-checkbox").each(function(){
+            let filter_value = $(this).val()
+            let filter_key = $(this).data("filter")
 
-            console.log("Filter value is:", filter_value);
-            console.log("Filter key is:", filter_key);
+            console.log("Filter value is:",filter_value)
+            console.log("Filter key is:",filter_key)
 
-            // Collect checked filter values for each filter key
-            filter_object[filter_key] = Array.from(
-                document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')
-            ).map(function(element) {
-                return element.value;
-            });
-        });
-
-        console.log("Filter object is:", filter_object);
-
-        // Send AJAX request with the filter data
+            filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter='+ filter_key +']:checked')).map(function(element){
+                return element.value
+            })
+        })
+        console.log("Filter object is :", filter_object);
         $.ajax({
-            url: '/filter-products', // Make sure this is the correct URL for filtering products
-            type: 'GET', // Assuming it's a GET request, adjust if needed
-            data: filter_object, // Send the filter object as data
-            dataType: 'json',
-            beforeSend: function() {
+            url :'/filter-products',
+            data : filter_object ,
+            dataType : 'json',
+            beforeSend : function(){
                 console.log("product is yet to be filtered...");
-                // Show loader or other actions (optional)
-                $("#loader").show(); // Ensure you have an element with id 'loader'
             },
-            success: function(response) { // Pass response parameter to access the response data
-                console.log(response); // Log the response from the server
-                console.log("product filtered successfully....");
-                $("#filtered-products").html(response.data)
-                // You can now use the response to update the DOM, e.g., product list
-            },
-            complete: function() {
-                // Hide loader after request completes (optional)
-                $("#loader").hide();
-            },
-            error: function(xhr, status, error) {
-                console.log("An error occurred: " + error); // Handle any errors
+            success : function(){
+                console.log(response)
+                console.log("product filtered sucessfully....")
+                $("filtered-produtcs").html(response.data)
             }
-        });
-    });
-});
+        })
+    })
+})

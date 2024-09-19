@@ -168,6 +168,10 @@ def filter_product(request):
     
     if len(vendors) > 0:
         products = products.filter(vendor__id__in=vendors).distinct()
+        
+    context = {
+        'products': products,
+    }
     
-    data = render_to_string("ecom/async/product-list.html", {'products': products})
+    data = render_to_string("ecom/async/product-list.html",context)
     return JsonResponse({"data": data})
