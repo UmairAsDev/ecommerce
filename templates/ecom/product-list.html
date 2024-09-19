@@ -8,33 +8,91 @@
         <style>
             input[type="range"] {
                 -webkit-appearance: none;
-                margin-right: 15px;
-                height: 7px;
-                background: rgba(255, 255, 255, 0.6);
-                border-radius: 5px;
-                background-image: linear-gradient(#3bb77e, #3bb77e);
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
+                margin: 20px 0;
+                height: 8px;
+                background: transparent;
+                border-radius: 10px;
+                position: relative;
+                width: 100%;
             }
             
+            /* Track styling */
+            input[type="range"]::-webkit-slider-runnable-track {
+                height: 8px;
+                background: #e0e0e0;
+                border-radius: 10px;
+            }
+            
+            /* Thumb styling */
             input[type="range"]::-webkit-slider-thumb {
                 -webkit-appearance: none;
-                height: 20px;
-                width: 20px;
+                height: 24px;
+                width: 24px;
+                background: #ff4081;
                 border-radius: 50%;
-                background: #3bb77e;
-                cursor: ew-resize;
-                box-shadow: 0 0 2px 0 #555;
-                transition: background 0.3s ease-in-out;
+                cursor: pointer;
+                position: relative;
+                box-shadow: 0 0 15px rgba(255, 64, 129, 0.7), 0 0 10px rgba(0, 0, 0, 0.2);
+                transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
             }
             
-            input[type="range"]::-webkit-slider-runnable-track {
-                -webkit-appearance: none;
-                box-shadow: none;
-                border: none;
-                background: transparent;
+            /* Hover effect for thumb */
+            input[type="range"]::-webkit-slider-thumb:hover {
+                background: #f50057;
+                transform: scale(1.2);
             }
-            </style>            
+            
+            /* Focus effect for thumb */
+            input[type="range"]:focus::-webkit-slider-thumb {
+                background: #c51162;
+            }
+            
+            /* Cross-browser styles for Mozilla and Microsoft */
+            input[type="range"]::-moz-range-track {
+                height: 8px;
+                background: #e0e0e0;
+                border-radius: 10px;
+            }
+            
+            input[type="range"]::-moz-range-thumb {
+                height: 24px;
+                width: 24px;
+                background: #ff4081;
+                border-radius: 50%;
+                cursor: pointer;
+                box-shadow: 0 0 15px rgba(255, 64, 129, 0.7), 0 0 10px rgba(0, 0, 0, 0.2);
+                transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+            
+            input[type="range"]::-ms-track {
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+                height: 8px;
+                border-radius: 10px;
+            }
+            
+            input[type="range"]::-ms-fill-lower {
+                background: #e0e0e0;
+                border-radius: 10px;
+            }
+            
+            input[type="range"]::-ms-fill-upper {
+                background: #e0e0e0;
+                border-radius: 10px;
+            }
+            
+            input[type="range"]::-ms-thumb {
+                height: 24px;
+                width: 24px;
+                background: #ff4081;
+                border-radius: 50%;
+                cursor: pointer;
+                box-shadow: 0 0 15px rgba(255, 64, 129, 0.7), 0 0 10px rgba(0, 0, 0, 0.2);
+                transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+            </style>                        
+                        
     </head>
     <main class="main">
         <div class="page-header breadcrumb-wrap">
@@ -123,19 +181,20 @@
                                     <div class="sidebar-widget price_range range">
                                         <div class="price-filter mb-20">
                                             <div class="price-filter-inner">
-                                                <input type="range" name = "range" id = "range" class="slider-range" min="0" max="100000" step = "20" oninput = "max_price.value=this.value">
+                                                <input type="range" name="range" value = "{{min_max_price.price__min}}" id = "range" class="slider-range" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" oninput = "max_price.value=this.value">
                                                 {% comment %} <div id="slider-range" class="mb-20"></div> {% endcomment %}
                                                 <div class="d-flex justify-content-between">
-                                                    <div class="caption">From: <strong id="slider-range-value1" class="text-brand"></strong></div>
-                                                    <div class="caption">To: <strong id="slider-range-value2" class="text-brand"></strong></div>
+                                                    <div class="caption">From: <strong id="slider-range-value1" class="text-brand">${{min_max_price.price__min|floatformat:2}}</strong></div>
+                                                    <div class="caption">To: <strong id="slider-range-value2" class="text-brand">${{min_max_price.price__max|floatformat:2}}</strong></div>
                                                 </div>
-                                                <input type="number" name = "" id= "max_price" min="0" max="100000" placeholder = "Current Price" onkeyup = "range.value=this.value">
+                                                <input type="number" name = "" value = "{{min_max_price.price__min}}" id= "max_price" min="{{min_max_price.price__min}}" max="{{min_max_price.price__max}}" placeholder = "Current Price" onkeyup = "range.value=this.value">
                                             </div>
                                         </div>
                                         <div class="custome-checkbox">
                                             <button class="btn mt-20 w-100">
-                                                Filter
+                                                Filter BY Price
                                             </button>
+                                            <h3>{{ min_max_price }}</h3>
                                         </div>
                                     </div>
                                 </div>
