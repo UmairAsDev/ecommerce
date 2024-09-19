@@ -86,8 +86,7 @@ $(document).ready(function() {
 
         // Send AJAX request with the filter data
         $.ajax({
-            url: '/filter-products', // Make sure this is the correct URL for filtering products
-            type: 'GET', // Assuming it's a GET request, adjust if needed
+            url: '/filter-products', // Ensure this is the correct URL for filtering products
             data: filter_object, // Send the filter object as data
             dataType: 'json',
             beforeSend: function() {
@@ -95,11 +94,11 @@ $(document).ready(function() {
                 // Show loader or other actions (optional)
                 $("#loader").show(); // Ensure you have an element with id 'loader'
             },
-            success: function(response) { // Pass response parameter to access the response data
+            success: function(response) { // Pass the response parameter to access the response data
                 console.log(response); // Log the response from the server
                 console.log("product filtered successfully....");
-                $("#filtered-products").html(response.data)
-                // You can now use the response to update the DOM, e.g., product list
+                // Update the product list or any relevant part of the DOM
+                $("#filtered-products").html(response.data); // Corrected ID selector for the product list
             },
             complete: function() {
                 // Hide loader after request completes (optional)

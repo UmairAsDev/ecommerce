@@ -158,7 +158,7 @@ def search_view(request):
 
 
 def filter_product(request):
-    categories = request.GET.getlist("category[]")
+    categories = request.GET.getlist("Category[]")
     vendors = request.GET.getlist("vendor[]")
     
     products = Products.objects.filter(product_status = "published").order_by("-id").distinct()
