@@ -19,8 +19,11 @@ def index(request):
 
 def product_list_view(request):
     products = Products.objects.filter(product_status = "published")
+    tags = Tag.objects.all()
+
     context = {
-        "products": products
+        "products": products,
+        'tags' : tags,
     }
     return render(request, 'ecom/product-list.html', context)
 

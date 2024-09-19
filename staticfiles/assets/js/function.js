@@ -48,71 +48,78 @@ $("#commentForm").submit(function(e) {
 
 // Filter section functionality
 $(document).ready(function() {
-    $(".filter-checkbox", "#price-filter-btn").on("click", function() {
-        let filter_object = {};
+  // Handle filtering by checkbox and price
+  $(".filter-checkbox, #price-filter-btn").on("click", function(e) {
+      e.preventDefault();
+      
+      let filter_object = {};
 
-        let min_price = $("#max_price").attr("min")
-        let max_price = $("#max_price").val()
+      let min_price = $("#max_price").attr("min");
+      let max_price = $("#max_price").val();
 
-        filter_object.min_price = min_price;
-        filter_object.max_price = max_price;
+      filter_object.min_price = min_price;
+      filter_object.max_price = max_price;
 
-        $(".filter-checkbox").each(function() {
-            let filter_value = $(this).val();
-            let filter_key = $(this).data("filter");
+      $(".filter-checkbox").each(function() {
+          let filter_value = $(this).val();
+          let filter_key = $(this).data("filter");
 
-            filter_object[filter_key] = Array.from(
-                document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')
-            ).map(function(element) {
-                return element.value;
-            });
-        });
+          filter_object[filter_key] = Array.from(
+              document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')
+          ).map(function(element) {
+              return element.value;
+          });
+      });
 
-        $.ajax({
-            url: '/filter-products',
-            data: filter_object,
-            dataType: 'json',
-            beforeSend: function() {
-                $("#loader").show();
-            },
-            success: function(response) {
-                $("#filtered-products").html(response.data);
-            },
-            complete: function() {
-                $("#loader").hide();
-            },
-            error: function(xhr, status, error) {
-                console.log("An error occurred: " + error);
-            }
-        });
-    });
+      // Collect selected tags
+      let selectedTags = [];
+      $(".tags-list a.active").each(function() {
+          selectedTags.push($(this).data("slug"));
+      });
+      filter_object.Tag = selectedTags;
 
-    $("#max_price").on("blur", function(){
-      let min_price = $(this).attr("min")
-      let max_price = $(this).attr("max")
-      let current_price = $(this).val()
+      $.ajax({
+          url: '/filter-products',
+          data: filter_object,
+          dataType: 'json',
+          beforeSend: function() {
+              $("#loader").show();
+          },
+          success: function(response) {
+              $("#filtered-products").html(response.data);
+          },
+          complete: function() {
+              $("#loader").hide();
+          },
+          error: function(xhr, status, error) {
+              console.log("An error occurred: " + error);
+          }
+      });
+  });
 
-      // console.log("current price is:", current_price);
-      // console.log("min price is:", min_price);
-      // console.log("max price is:", max_price);
+  // Handle tag click
+  $(".tags-list a").on("click", function(e) {
+      e.preventDefault();
+      $(this).toggleClass("active");
 
-      if (current_price < parseInt(min_price) || current_price > parseInt(max_price)){
-        console.log("Price Error Occurred....!")
+      // Trigger the filtering process
+      $(".filter-checkbox").first().trigger("click");
+  });
 
-        min_price = Math.round(min_price * 100) / 100
-        max_price = Math.round(max_price * 100) / 100
+  // Handle price validation
+  $("#max_price").on("blur", function(){
+    let min_price = $(this).attr("min");
+    let max_price = $(this).attr("max");
+    let current_price = $(this).val();
 
-        // console.log("min price is:", min_price);
-        // console.log("max price is:", max_price);
-
-        alert("Price must be between:$" +min_price + 'and' +max_price)
-        $(this).val(min_price)
-        $('#range').val(min_price)
-        $(this).focus()
-
-        return false
-      }
-    })
+    if (current_price < parseInt(min_price) || current_price > parseInt(max_price)){
+      alert("Price must be between: $" + min_price + ' and ' + max_price);
+      $(this).val(min_price);
+      $('#range').val(min_price);
+      $(this).focus();
+      return false;
+    }
+  });
 });
 
 
