@@ -116,4 +116,21 @@ $(document).ready(function() {
 });
 
 
+// Add to Cart btn.....
+
+$("#add-to-cart-btn").on("click", function(){
+  let quantity = $("#product-quantity").val()
+  let product_tittle = $(".product-title").val()
+  let product_id = $(".product-id").val()
+  let product_price = $("#current-product-price").text()
+  let this_val = $(this)
+
+  console.log("Total Quantity:",quantity);
+  console.log("Product title:",product_tittle);
+  console.log("Product id:",product_id);
+  console.log("Product price:", product_price);
+  console.log("This value:", this_val);
+})
+
+
 
