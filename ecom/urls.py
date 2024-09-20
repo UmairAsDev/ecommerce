@@ -30,7 +30,11 @@ urlpatterns = [
     
     # Async product-filter
     
-    path("filter-products/", views.filter_product, name="filter-product")
+    path("filter-products/", views.filter_product, name="filter-product"),
+    
+    # Add to Cart
+    
+    path("add-to-cart/", views.add_to_cart, name="add-to-cart")
 
 ]
 

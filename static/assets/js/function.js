@@ -150,6 +150,7 @@ $ ('#add-to-cart-btn').on ('click', function () {
     success: function (res) {
       this_val.html ('item added to cart..');
       console.log ('Added product to cart!');
+      $(".cart-item-count").text(res.totalcartitems)
     },
   });
 });

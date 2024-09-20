@@ -6,6 +6,7 @@ from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
 from django.db.models import Q
+from django.contrib.sessions.models import Session
 # Create your views here.
 
 def index(request):
@@ -187,4 +188,24 @@ def filter_product(request):
 
 def add_to_cart(request):
     cart_product ={}
-    cart_product[str(request.GET['id'])]
+    cart_product[str(request.GET['id'])] = {
+        'title' : request.GET['title'],
+        'qty' : request.GET['qty'],
+        'price' : request.GET['price']
+    }
+    
+    if 'cart_data_obj' in request.session:
+        if str(request.GET['id']) in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
+            cart_data.update(cart_data)
+            request.session['cart_data_obj'] = cart_data
+        else:
+            cart_data = request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+    
+    else:
+        request.session['cart_data_obj'] = cart_product
+    
+    return JsonResponse({'data': request.session['cart_data_obj'], 'totalcartitems' : len(request.session['cart_data_obj'])})
