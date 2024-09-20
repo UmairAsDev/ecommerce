@@ -183,3 +183,8 @@ def filter_product(request):
     
     data = render_to_string("ecom/async/product-list.html",context)
     return JsonResponse({"data": data})
+
+
+def add_to_cart(request):
+    cart_product ={}
+    cart_product[str(request.GET['id'])]
