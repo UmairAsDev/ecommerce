@@ -1,0 +1,5 @@
+{
+    "editor.defaultFormatter": "vscode.html-language-features",
+    "notebook.defaultFormatter": "almahdi.code-django",
+    "html.format.templating": true
+}
