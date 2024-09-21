@@ -96,12 +96,20 @@
                                                 <span class="qty-val">1</span>
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                             </div> {% endcomment %}
-                                                <input type="number" value="1" name="" id="product-quantity" class="w-25 mb-10">
+                                            
+                                            <input type="number" value="1" name="" id="product-quantity" class="w-25 mb-10">
                                             </br>
+
                                             <div class="product-extra-link2">
-                                                <input type="hidden" class="product-id" name="" value = "{{product.id}}" id= "">
-                                                <input type="hidden" class= "product-title" name="" value = "{{product.title}}" id= "">
-                                                <button type="submit" id="add-to-cart-btn" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                {% comment %} <input type="hidden" class="product-id" name="" value = "{{product.id}}" id= "">
+                                                <input type="hidden" class= "product-title" name="" value = "{{product.title}}" id= ""> {% endcomment %}
+                                                
+                                                <input type="hidden" value="1" id = "product-quantity" class="product-quantity-{{product.id}}" class="w-25 mb-20">
+                                                <input type="hidden" class="product-pid-{{product.id}}" value="{{product.pid}}">
+                                                <input type="hidden" class="product-image-{{product.id}}" value="{{product.image.url}}">
+                                                <input type="hidden" class = "product-id-{{product.id}}" value="{{product.id}}">
+                                                <input type="hidden" class = "product-title-{{product.id}}" value="{{product.title}}">
+                                                <button type="submit" id="add-to-cart-btn" class="button button-add-to-cart add-to-cart-btn" data-index = "{{product.id}}"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                             </div>
@@ -426,7 +434,7 @@
                                                         <span> </span>
                                                     </div>
                                                     <div class="product-price">
-                                                        <span>${{p.price}}</span>
+                                                        <span>$</span> <span class="current-product-price-{{p.id}}">{{p.price}}</span>
                                                         <span class="old-price">${{p.old_price}}</span>
                                                     </div>
                                                 </div>
