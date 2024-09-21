@@ -34,8 +34,11 @@ urlpatterns = [
     
     # Add to Cart
     
-    path("add-to-cart/", views.add_to_cart, name="add-to-cart")
-
+    path("add-to-cart/", views.add_to_cart, name="add-to-cart"),
+    
+    # Cart Page Url
+    
+    path("cart/", views.cart_view, name="cart"),
 ]
 
 

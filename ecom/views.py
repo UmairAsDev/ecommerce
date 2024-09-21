@@ -211,3 +211,8 @@ def add_to_cart(request):
         request.session['cart_data_obj'] = cart_product
     
     return JsonResponse({'data': request.session['cart_data_obj'], 'totalcartitems' : len(request.session['cart_data_obj'])})
+
+
+
+def cart_view(request):
+    return render(request, "ecom/cart.html")
