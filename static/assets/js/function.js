@@ -156,51 +156,48 @@ $ (document).ready (function () {
 // });
 
 
-$ (".add-to-cart-btn").on ("click", function () {
-  let this_val = $(this)
-  let index = this_val.attr("data-index")
+$(".add-to-cart-btn").on("click", function () {
+  let this_val = $(this);
+  let index = this_val.attr("data-index");
 
-  let quantity = $ (".product-quantity-"+ index).val ();
-  let product_title = $ (".product-title-" + index).val ();
-
-  let product_image = $(".product-image-"+ index).val();
-  let product_pid = $ (".product-pid-"+ index).val();
-
-  let product_id = $(".product-id-"+ index).val()
+  let quantity = $(".product-quantity-" + index).val();
+  let product_title = $(".product-title-" + index).val();
+  let product_image = $(".product-image-" + index).val();
+  let product_pid = $(".product-pid-" + index).val();
+  let product_id = $(".product-id-" + index).val();
   let product_price = $(".current-product-price-" + index).text();
 
-  console.log ('Current Element:', this_val);
-  console.log ('Index:', index);
+  console.log('Current Element:', this_val);
+  console.log('Index:', index);
+  console.log('Quantity:', quantity);
+  console.log('Product title:', product_title);
+  console.log('Product image:', product_image);
+  console.log('Product pid:', product_pid);
+  console.log('Product id:', product_id);
+  console.log('Product price:', product_price);
 
-  console.log ('Quantity:', quantity);
-  console.log ('Product title:', product_title);
-
-  console.log ('Product image:', product_image);
-  console.log ('Product pid:', product_pid);
-
-  console.log ('Product id:', product_id);
-  console.log ('Product price:', product_price);
-
-
-  $.ajax ({
-    url: '/add-to-cart',
-    data: {
-      'id': product_id,
-      'pid':product_pid,
-      'qty': quantity,
-      'title': product_title,
-      'price': product_price,
-      'image': product_image,
-    },
-    dataType: 'json',
-    beforeSend: function () {
-      console.log ('Adding product to cart...');
-    },
-    success: function (res) {
-      this_val.html ('✔');
-      console.log ('Added product to cart!');
-      $(".cart-item-count").text(res.totalcartitems)
-    },
-
+  $.ajax({
+      url: '/add-to-cart',
+      type: 'GET',  // Ensure this matches your Django view method
+      data: {
+          'id': product_id,
+          'pid': product_pid,
+          'qty': quantity,
+          'title': product_title,
+          'price': product_price,
+          'image': product_image,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+          console.log('Adding product to cart...');
+      },
+      success: function (res) {
+          this_val.html('✔');
+          console.log('Added product to cart!');
+          $(".cart-item-count").text(res.totalcartitems);
+      },
+      error: function (xhr, status, error) {
+          console.error('Error adding product to cart:', error);
+      }
   });
 });

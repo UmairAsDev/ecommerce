@@ -8,6 +8,7 @@ from ecom.forms import ProductReviewForm
 from django.db.models import Q
 from django.contrib import messages
 import warnings
+warnings.filterwarnings('ignore')
 # Create your views here.
 
 def index(request):
@@ -187,59 +188,53 @@ def filter_product(request):
     return JsonResponse({"data": data})
 
 
+
 def add_to_cart(request):
-    cart_product ={}
-    cart_product[str(request.GET['id'])] = {
-        'title' : request.GET['title'],
-        'qty' : request.GET['qty'],
-        'price' : request.GET['price'],
-        'image': request.GET['image'],
-        'pid' : request.GET['pid']
+    cart_product = {
+        str(request.GET['id']): {
+            'title': request.GET['title'],
+            'qty': int(request.GET['qty']),
+            'price': float(request.GET['price']),
+            'image': request.GET['image'],
+            'pid': request.GET['pid']
+        }
     }
-    
+
+    # Check if cart_data_obj exists in session
     if 'cart_data_obj' in request.session:
-        if str(request.GET['id']) in request.session['cart_data_obj']:
-            cart_data = request.session['cart_data_obj']
-            cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
-            cart_data.update(cart_data)
-            request.session['cart_data_obj'] = cart_data
+        cart_data = request.session['cart_data_obj']
+        
+        # If product already in cart, update quantity
+        if str(request.GET['id']) in cart_data:
+            cart_data[str(request.GET['id'])]['qty'] += int(cart_product[str(request.GET['id'])]['qty'])
         else:
-            cart_data = request.session['cart_data_obj']
+            # Add new product to cart
             cart_data.update(cart_product)
-            request.session['cart_data_obj'] = cart_data
-    
+        
+        # Save updated cart back to session
+        request.session['cart_data_obj'] = cart_data
     else:
+        # Create new cart if it doesn't exist
         request.session['cart_data_obj'] = cart_product
-    
-    return JsonResponse({'data': request.session['cart_data_obj'], 'totalcartitems' : len(request.session['cart_data_obj'])})
 
-
-
-# def cart_view(request):
-#     cart_total_amount = 0
-#     cart_data = request.session.get('cart_data_obj', {})
-
-#     if cart_data:
-#         for item in cart_data.values():
-#             cart_total_amount += int(item['qty']) * float(item['price'])
-
-#     return render(
-#         request, 
-#         "ecom/cart.html", 
-#         {
-#             'cart_data': cart_data, 
-#             'totalcartitems': len(cart_data),
-#             'cart_total_amount': cart_total_amount
-#         }
-#     )
+    # Return response with cart data and total items
+    total_cart_items = len(request.session['cart_data_obj'])
+    return JsonResponse({'data': request.session['cart_data_obj'], 'totalcartitems': total_cart_items})
 
 
 def cart_view(request):
     cart_total_amount = 0
-    if 'cart_data_obj' in request.session:
-        for p_pid, item in request.session['cart_data_obj'].items():
+    cart_data = request.session.get('cart_data_obj', {})
+    
+    if cart_data:
+        for item in cart_data.values():
             cart_total_amount += int(item['qty']) * float(item['price'])
-        return render(request, "ecom.cart.html", {"cart_data" : request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj'])})
+        
+        return render(request, "ecom/cart.html", {
+            "cart_data": cart_data,
+            "totalcartitems": len(cart_data),
+            "cart_total_amount": cart_total_amount
+        })
     else:
-        messages.warning(request,  "your cart is empty")
-        return redirect("ecom/index")
+        messages.warning(request, "Your cart is empty.")
+        return redirect("ecom:index")

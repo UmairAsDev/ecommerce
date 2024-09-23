@@ -5,6 +5,8 @@ from userauths.models import User
 from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
+import warnings
+warnings.filterwarnings('ignore')
 
 
 STATUS_CHOICE = (

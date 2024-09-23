@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+import warnings
+
+warnings.filterwarnings('ignore')
 
 
 
@@ -38,7 +41,7 @@ urlpatterns = [
     
     # Cart Page Url
     
-    path("cart/", views.cart_view, name="cart"),
+    path("cart/", views.cart_view, name="cart")
 ]
 
 
