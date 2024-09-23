@@ -96,15 +96,15 @@
                                                 <span class="qty-val">1</span>
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                             </div> {% endcomment %}
-                                            
-                                            <input type="number" value="1" name="" id="product-quantity" class="w-25 mb-10">
-                                            </br>
+                                         
+                                            <input type="number" value="1" name="" id="product-quantity" class="w-25 mb-10" class="product-quantity-{{product.id}}">
+                                            <br/>
 
                                             <div class="product-extra-link2">
                                                 {% comment %} <input type="hidden" class="product-id" name="" value = "{{product.id}}" id= "">
                                                 <input type="hidden" class= "product-title" name="" value = "{{product.title}}" id= ""> {% endcomment %}
                                                 
-                                                <input type="hidden" value="1" id = "product-quantity" class="product-quantity-{{product.id}}" class="w-25 mb-20">
+                                                {% comment %} <input type="hidden" value="1" id = "product-quantity" class="product-quantity-{{product.id}}" class="w-25 mb-20"> {% endcomment %}
                                                 <input type="hidden" class="product-pid-{{product.id}}" value="{{product.pid}}">
                                                 <input type="hidden" class="product-image-{{product.id}}" value="{{product.image.url}}">
                                                 <input type="hidden" class = "product-id-{{product.id}}" value="{{product.id}}">

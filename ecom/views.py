@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Count, Avg
@@ -6,7 +6,8 @@ from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
 from django.db.models import Q
-from django.contrib.sessions.models import Session
+from django.contrib import messages
+import warnings
 # Create your views here.
 
 def index(request):
@@ -214,20 +215,31 @@ def add_to_cart(request):
 
 
 
+# def cart_view(request):
+#     cart_total_amount = 0
+#     cart_data = request.session.get('cart_data_obj', {})
+
+#     if cart_data:
+#         for item in cart_data.values():
+#             cart_total_amount += int(item['qty']) * float(item['price'])
+
+#     return render(
+#         request, 
+#         "ecom/cart.html", 
+#         {
+#             'cart_data': cart_data, 
+#             'totalcartitems': len(cart_data),
+#             'cart_total_amount': cart_total_amount
+#         }
+#     )
+
+
 def cart_view(request):
     cart_total_amount = 0
-    cart_data = request.session.get('cart_data_obj', {})
-
-    if cart_data:
-        for item in cart_data.values():
+    if 'cart_data_obj' in request.session:
+        for p_pid, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price'])
-
-    return render(
-        request, 
-        "ecom/cart.html", 
-        {
-            'cart_data': cart_data, 
-            'totalcartitems': len(cart_data),
-            'cart_total_amount': cart_total_amount
-        }
-    )
+        return render(request, "ecom.cart.html", {"cart_data" : request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj'])})
+    else:
+        messages.warning(request,  "your cart is empty")
+        return redirect("ecom/index")
