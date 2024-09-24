@@ -166,32 +166,61 @@ $ (document).ready (function () {
   });
 
   $(".delete-product").on("click", function(){
-    let product_id = $(this).attr("");
+    let product_id = $(this).attr("data-product");
     let this_val = $(this);
     console.log("Product ID", product_id);
   
-    // $.ajax({
-    //   url: '/delete-from-cart',
-    //   data: {
-    //     'id': product_id,
-    //   },
-    //   dataType: 'json',
-    //   beforeSend: function(){
-    //     this_val.attr('disabled', true);
-    //   },
-    //   success: function(response){
-    //     console.log(response);
-    //     $(".cart-item-count").text(response.totalcartitems);
-    //     this_val.attr("disabled", false);
-    //     $("#cartList").html(response.data);
-    //   },
-    //   error: function(xhr, status, error) {
-    //     console.error("Error deleting product:", error);
-    //     this_val.attr("disabled", false); // Re-enable even on error
-    //   }
-    // });
+    $.ajax({
+      url: '/delete-from-cart',
+      data: {
+        'id': product_id,
+      },
+      dataType: 'json',
+      beforeSend: function(){
+        this_val.hide()
+      },
+      success: function(response){
+        this_val.show()
+        console.log(response);
+        $(".cart-item-count").text(response.totalcartitems);
+        $("#cart-list").html(response.data);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error deleting product:", error);
+        this_val.attr("disabled", false); // Re-enable even on error
+      }
+    });
   });
 
+  $(".update-product").on("click", function(){
+    let product_id = $(this).attr("data-product");
+    let this_val = $(this);
+    let product_quantity = $(".product-qty-"+product_id)
+    console.log("Product ID", product_id);
+  
+    $.ajax({
+      url: '/update-cart',
+      data: {
+        'id': product_id,
+        'qty':product_quantity
+      },
+      dataType: 'json',
+      beforeSend: function(){
+        this_val.hide()
+      },
+      success: function(response){
+        this_val.show()
+        console.log(response);
+        $(".cart-item-count").text(response.totalcartitems);
+        $("#cart-list").html(response.data);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error deleting product:", error);
+        this_val.attr("disabled", false); // Re-enable even on error
+      }
+    });
+  });
+  
 });
 
 
