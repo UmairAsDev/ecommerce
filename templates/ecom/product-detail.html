@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="clearfix product-price-cover">
                                             <div class="product-price primary-color float-left">
-                                                <span class="current-price text-brand">$</span><span class="current-price text-brand" id="current-product-price">{{product.price}}</span>
+                                                <span class="current-price text-brand">$</span><span class="current-product-price-{{ product.id }}">{{ product.price }}</span>
                                                 <span>
                                                     <span class="save-price font-md color3 ml-15">{{product.get_percentage|floatformat:0}}% Off</span>
                                                     <span class="old-price font-md ml-15">${{product.old_price}}</span>
@@ -97,7 +97,7 @@
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                             </div> {% endcomment %}
                                          
-                                            <input type="number" value="1" name="" id="product-quantity" class="w-25 mb-10" class="product-quantity-{{product.id}}">
+                                            <input type="number" value="1" min="1" name="" id="product-quantity" class="product-quantity-{{product.id}} w-25 mb-10">
                                             <br/>
 
                                             <div class="product-extra-link2">
@@ -105,13 +105,16 @@
                                                 <input type="hidden" class= "product-title" name="" value = "{{product.title}}" id= ""> {% endcomment %}
                                                 
                                                 {% comment %} <input type="hidden" value="1" id = "product-quantity" class="product-quantity-{{product.id}}" class="w-25 mb-20"> {% endcomment %}
-                                                <input type="hidden" class="product-pid-{{product.id}}" value="{{product.pid}}">
-                                                <input type="hidden" class="product-image-{{product.id}}" value="{{product.image.url}}">
-                                                <input type="hidden" class = "product-id-{{product.id}}" value="{{product.id}}">
-                                                <input type="hidden" class = "product-title-{{product.id}}" value="{{product.title}}">
-                                                <button type="submit" id="add-to-cart-btn" class="button button-add-to-cart add-to-cart-btn" data-index = "{{product.id}}"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                <input type="hidden" class="product-pid-{{ product.id }}" value="{{ product.pid }}">
+                                                <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
+                                                <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                                                <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
+                                                <button type="button" id="add-to-cart-btn" class="button button-add-to-cart add-to-cart-btn" data-index="{{ product.id }}">
+                                                    <i class="fi-rs-shopping-cart"></i>Add to cart
+                                                </button>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+
                                             </div>
                                         </div>
                                         <div class="font-xs">
@@ -304,7 +307,7 @@
                                                                             <div class="d-flex align-items-center">
                                                                                 <span class="font-xs text-muted">{{r.date|date:"d M, Y"}}</span>
                                                                             </div>
-                                                                        </br>
+                                                                        <br/>
                                                                             <div class="">
                                                                                 {% for s in r.rating|ljust:r.rating  %}
                                                                                 <i class="fas fa-star text-warning"></i>
