@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 app_name = 'ecom'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('Home/', views.index, name='index'),
     # Product
     path("products/",views.product_list_view, name='products_list'),
     path("product/<pid>/", views.product_detail_view, name = 'product-detail'),

@@ -330,21 +330,21 @@
                                 <ul>
                                     <li class="hot-deals"><img src="{% static 'assets/imgs/theme/icons/icon-hot.svg' %}" alt="hot deals" /><a href="shop-grid-right.html">Deals</a></li>
                                     <li>
-                                        <a class="active" href="index.html">Home <i class="fi-rs-angle-down"></i></a>
-                                        <ul class="sub-menu">
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                            <li><a href="index-3.html">Home 3</a></li>
-                                            <li><a href="index-4.html">Home 4</a></li>
-                                            <li><a href="index-5.html">Home 5</a></li>
-                                            <li><a href="index-6.html">Home 6</a></li>
-                                        </ul>
+                                        <a class="active" href="{% url 'ecom:index' %}">Home <i class="fi-rs-angle-down"></i></a>
+                                        {% comment %} <ul class="sub-menu">
+                                            <li><a href="{% url 'ecom:index' %}">Home 1</a></li>
+                                            <li><a href="{% url 'ecom:index' %}">Home 2</a></li>
+                                            <li><a href="{% url 'ecom:index' %}">Home 3</a></li>
+                                            <li><a href="{% url 'ecom:index' %}">Home 4</a></li>
+                                            <li><a href="{% url 'ecom:index' %}">Home 5</a></li>
+                                            <li><a href="{% url 'ecom:index' %}">Home 6</a></li>
+                                        </ul> {% endcomment %}
                                     </li>
                                     {% comment %} <li>
                                         <a href="page-about.html">About</a>
                                     </li> {% endcomment %}
                                     <li>
-                                        <a href="shop-grid-right.html">Category<i class="fi-rs-angle-down"></i></a>
+                                        <a href="{% url "ecom:category_list" %}">Category<i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             {% for c in categories %}
                                             <li><a href="{% url "ecom:category_product_list"  c.cid%}">{{c.title}}</a></li>
@@ -521,7 +521,7 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="index.html"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
+                    <a href="{% url 'ecom:index' %}"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -542,14 +542,14 @@
                     <nav>
                         <ul class="mobile-menu font-heading">
                             <li class="menu-item-has-children">
-                                <a href="index.html">Home</a>
+                                <a href="{% url 'ecom:index' %}">Home</a>
                                 <ul class="dropdown">
-                                    <li><a href="index.html">Home 1</a></li>
-                                    <li><a href="index-2.html">Home 2</a></li>
-                                    <li><a href="index-3.html">Home 3</a></li>
-                                    <li><a href="index-4.html">Home 4</a></li>
-                                    <li><a href="index-5.html">Home 5</a></li>
-                                    <li><a href="index-6.html">Home 6</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 1</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 2</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 3</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 4</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 5</a></li>
+                                    <li><a href="{% url 'ecom:index' %}">Home 6</a></li>
                                 </ul>
                             </li>
                             <li class="menu-item-has-children">
@@ -809,7 +809,7 @@
                     <div class="col">
                         <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0">
                             <div class="logo mb-30">
-                                <a href="index.html" class="mb-15"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
+                                <a href="{% url 'ecom:index' %}" class="mb-15"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
                                 <p class="font-lg text-heading">Awesome grocery store website template</p>
                             </div>
                             <ul class="contact-infor">
