@@ -166,7 +166,7 @@ $ (document).ready (function () {
   });
 
   $(".delete-product").on("click", function(){
-    let product_id = $(this).attr("");
+    let product_id = $(this).attr("data-product");
     let this_val = $(this);
     console.log("Product ID", product_id);
   
@@ -177,13 +177,13 @@ $ (document).ready (function () {
       },
       dataType: 'json',
       beforeSend: function(){
-        this_val.attr('disabled', true);
+        this_val.hide()
       },
       success: function(response){
+        this_val.show()
         console.log(response);
         $(".cart-item-count").text(response.totalcartitems);
-        this_val.attr("disabled", false);
-        $("#cartList").html(response.data);
+        $("#cart-list").html(response.data);
       },
       error: function(xhr, status, error) {
         console.error("Error deleting product:", error);

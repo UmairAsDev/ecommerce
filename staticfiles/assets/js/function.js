@@ -170,28 +170,28 @@ $ (document).ready (function () {
     let this_val = $(this);
     console.log("Product ID", product_id);
   
-    $.ajax({
-      url: '/delete-from-cart',
-      data: {
-        'id': product_id,
-      },
-      dataType: 'json',
-      beforeSend: function(){
-        this_val.attr('disabled', true);
-      },
-      success: function(response){
-        console.log(response);
-        $(".cart-item-count").text(response.totalcartitems);
-        this_val.attr("disabled", false);
-        $("#cartList").html(response.data);
-      },
-      error: function(xhr, status, error) {
-        console.error("Error deleting product:", error);
-        this_val.attr("disabled", false); // Re-enable even on error
-      }
-    });
+    // $.ajax({
+    //   url: '/delete-from-cart',
+    //   data: {
+    //     'id': product_id,
+    //   },
+    //   dataType: 'json',
+    //   beforeSend: function(){
+    //     this_val.attr('disabled', true);
+    //   },
+    //   success: function(response){
+    //     console.log(response);
+    //     $(".cart-item-count").text(response.totalcartitems);
+    //     this_val.attr("disabled", false);
+    //     $("#cartList").html(response.data);
+    //   },
+    //   error: function(xhr, status, error) {
+    //     console.error("Error deleting product:", error);
+    //     this_val.attr("disabled", false); // Re-enable even on error
+    //   }
+    // });
   });
-  
+
 });
 
 
