@@ -42,7 +42,7 @@ urlpatterns = [
     # Cart Page Url
     
     path("cart/", views.cart_view, name="cart"),
-    
+    # Delete from Cart
     path("delete-from-cart/", views.delete_item_from_cart, name="delete-from-cart")
 ]
 
