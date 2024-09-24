@@ -7,7 +7,7 @@
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                    <a href="{% url 'ecom:index' %}" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                     <span></span> Shop
                     <span></span> Cart
                 </div>
@@ -61,7 +61,7 @@
                                     <td class="price" data-title="Price">
                                         <h4 class="text-brand">${% widthratio item.price 1 item.qty%} </h4>
                                     </td>
-                                    <td class="action text-center" data-title="Refresh"><a href="#" class="text-body"><i class="fi-rs-refresh"></i></a></td>
+                                    <td class="action text-center" data-title="Refresh"><button style="border:none; background:none;" class="text-body update-product" data-product="{{product_id}}"><i class="fi-rs-refresh"></i></button></td>
                                     <td class="action text-center" data-title="Remove"><button style="border:none; background:none;" class="text-body delete-product" data-product="{{product_id}}"><i class="fi-rs-trash"></i></button></td>
                                 </tr>
                                 {% endfor %}
