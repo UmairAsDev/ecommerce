@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'fontawesomefree',
+    # paypal integration
     'paypal.standard.ipn',
 
     # Custom app
@@ -184,4 +185,6 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+PAYPAL_RECEIVER_EMAIL = 'desphixs@buisness.paypal.com'
+PAYPAL_TEST = True
 

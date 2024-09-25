@@ -5,7 +5,8 @@ from django.db.models import Count, Avg
 from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required 
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
 import warnings
@@ -286,3 +287,12 @@ def checkout_view(request):
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price'])       
         return render(request, "ecom/checkout.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
+    
+@csrf_exempt  
+def payment_completed_view(request):
+    context = request.POST
+    return render(request, "ecom/payment-completed.html", {'context':context})
+
+@csrf_exempt
+def payment_failed_view(request):
+    return render(request, "ecom/payment-failed.html")
