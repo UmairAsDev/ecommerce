@@ -195,14 +195,15 @@ $ (document).ready (function () {
   $(".update-product").on("click", function(){
     let product_id = $(this).attr("data-product");
     let this_val = $(this);
-    let product_quantity = $(".product-qty-"+product_id)
+    let product_quantity = $(".product-qty-" + product_id).val();
     console.log("Product ID", product_id);
+    console.log("Product QTY", product_quantity);
   
     $.ajax({
       url: '/update-cart',
       data: {
         'id': product_id,
-        'qty':product_quantity
+        'qty':product_quantity,
       },
       dataType: 'json',
       beforeSend: function(){
