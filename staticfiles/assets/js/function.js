@@ -192,35 +192,50 @@ $ (document).ready (function () {
     });
   });
 
-  $(".update-product").on("click", function(){
+  $(".update-product").on("click", function() {
     let product_id = $(this).attr("data-product");
     let this_val = $(this);
+    
+    // Get the quantity for the current product
     let product_quantity = $(".product-qty-" + product_id).val();
-    console.log("Product ID", product_id);
-    console.log("Product QTY", product_quantity);
-  
+    
+    // Ensure the quantity is a valid number
+    if (product_quantity === undefined || product_quantity <= 0) {
+      alert("Invalid quantity!");
+      return;
+    }
+
+    console.log("Product ID:", product_id);
+    console.log("Product QTY:", product_quantity);
+
     $.ajax({
       url: '/update-cart',
       data: {
         'id': product_id,
-        'qty':product_quantity,
+        'qty': product_quantity,  // Send the valid quantity
       },
       dataType: 'json',
-      beforeSend: function(){
-        this_val.hide()
+      beforeSend: function() {
+        // Disable the button and give feedback
+        this_val.attr('disabled', true).text("Updating...");
       },
-      success: function(response){
-        this_val.show()
+      success: function(response) {
+        // Re-enable the button and update cart information
+        this_val.attr('disabled', false).text("Update");
         console.log(response);
+        
+        // Update the cart item count and list
         $(".cart-item-count").text(response.totalcartitems);
         $("#cart-list").html(response.data);
       },
       error: function(xhr, status, error) {
-        console.error("Error deleting product:", error);
-        this_val.attr("disabled", false); // Re-enable even on error
+        console.error("Error updating product:", error);
+        // Re-enable the button after an error
+        this_val.attr("disabled", false).text("Update");
       }
     });
   });
+
   
 });
 
