@@ -675,7 +675,7 @@
                     <div class="border p-40 cart-totals ml-30 mb-50">
                         <div class="d-flex align-items-end justify-content-between mb-30">
                             <h4>Your Order</h4>
-                            <h6 class="text-muted">Subtotal <span>{{cart_total_amount|floatformat:2}}</span></h6>
+                            <h6 class="text-muted">Subtotal <span class="text-brand"> ${{cart_total_amount|floatformat:2}}</span></h6>
                         </div>
                         <div class="divider-2 mb-30"></div>
                         <a href="{% url 'ecom:cart' %}" class="btn btn-fill-out btn-block mt-30 mb-40">Go Back To Cart</a>
@@ -732,7 +732,7 @@
                             <img class="mr-15" src="{% static 'assets/imgs/theme/icons/payment-master.svg' %}" alt="">
                             <img src="{% static 'assets/imgs/theme/icons/payment-zapper.svg' %}" alt="">
                         </div>
-                        <a href="#" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></a>
+                        <a href="{% url 'ecom:checkout' %}" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></a>
                     </div>
                 </div>
             </div>

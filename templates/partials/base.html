@@ -257,8 +257,8 @@
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <div class="shopping-cart-footer">
                                             <div class="shopping-cart-button">
-                                                <a href="shop-cart.html" class="outline">View cart</a>
-                                                <a href="shop-checkout.html">Checkout</a>
+                                                <a href="{% url 'ecom:cart' %}" class="outline">View cart</a>
+                                                <a href="{% url 'ecom:checkout' %}">Checkout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -494,7 +494,7 @@
                                     <div class="shopping-cart-footer">
                                         <div class="shopping-cart-button">
                                             <a href="{% url 'ecom:cart' %}">View cart</a>
-                                            <a href="">Checkout</a>
+                                            <a href="{% url 'ecom:checkout' %}">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -572,7 +572,7 @@
                                     <li><a href="shop-filter.html">Shop – Filter</a></li>
                                     <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
                                     <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                                    <li><a href="{% url 'ecom:checkout' %}">Shop – Checkout</a></li>
                                     <li><a href="shop-compare.html">Shop – Compare</a></li>
                                     <li class="menu-item-has-children">
                                         <a href="#">Shop Invoice</a>
@@ -836,7 +836,7 @@
                         <h4 class="widget-title">Account</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
                             <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
+                            <li><a href="{% url 'ecom:cart' %}">View Cart</a></li>
                             <li><a href="#">My Wishlist</a></li>
                             <li><a href="#">Track My Order</a></li>
                             <li><a href="#">Help Ticket</a></li>
