@@ -152,7 +152,7 @@ $(document).ready(function () {
         }`
       );
       $(this).val(min_price);
-      $(this).focus();
+      // $(this).focus();
       return false;
     }
   });
@@ -170,7 +170,6 @@ $(document).ready(function () {
 
     $.ajax({
       url: "/add-to-cart",
-      type: "GET",
       data: {
         id: product_id,
         pid: product_pid,
@@ -193,69 +192,67 @@ $(document).ready(function () {
       }
     });
   });
+});
 
-  $(".delete-product").on("click", function () {
-    const product_id = $(this).attr("data-product");
-    const currentButton = $(this);
+$(".update-product").on("click", function (event) {
+  console.log("clicked");
+  // event.preventDefault(); // Prevent default form submission
 
-    $.ajax({
-      url: "/delete-from-cart",
-      data: {
-        id: product_id
-      },
-      dataType: "json",
-      beforeSend: function () {
-        currentButton.hide();
-      },
-      success: function (response) {
-        currentButton.show();
-        $(".cart-item-count").text(response.totalcartitems);
-        $("#cart-list").html(response.data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error deleting product:", error);
-        currentButton.show(); // Show button again on error
-        alert("Failed to delete product from cart. Please try again.");
-      }
-    });
-  });
+  let product_id = $(this).attr("data-product");
+  let this_val = $(this);
+  let product_quantity = $(".product-qty-" + product_id).val();
 
-  $(".update-product").on("click", function (event) {
-    event.preventDefault();
+  if (!product_quantity || product_quantity <= 0) {
+    alert("Invalid quantity!");
+    return;
+  }
 
-    const product_id = $(this).attr("data-product");
-    const currentButton = $(this);
-
-    const product_quantity = $(".product-qty-" + product_id).val();
-
-    if (product_quantity === undefined || product_quantity <= 0) {
-      alert("Invalid quantity!");
-      return;
+  $.ajax({
+    url: "/update-cart",
+    data: {
+      id: product_id,
+      qty: product_quantity
+    },
+    dataType: "json",
+    beforeSend: function () {
+      this_val.attr("disabled", true).text("Updating...");
+    },
+    success: function (response) {
+      this_val.attr("disabled", false).text("Update");
+      $(".cart-item-count").text(response.totalcartitems);
+      $("#cart-list").html(response.data);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error updating product:", error);
+      alert("An error occurred while updating the product. Please try again.");
+      this_val.attr("disabled", false).text("Update");
     }
-
-    $.ajax({
-      url: "/update-cart",
-      data: {
-        id: product_id,
-        qty: product_quantity
-      },
-      dataType: "json",
-      beforeSend: function () {
-        currentButton.attr("disabled", true).text("Updating...");
-      },
-      success: function (response) {
-        currentButton.attr("disabled", false).text("Update");
-        $(".cart-item-count").text(response.totalcartitems);
-        $("#cart-list").html(response.data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error updating product:", error);
-        alert(
-          "An error occurred while updating the product. Please try again."
-        );
-        currentButton.attr("disabled", false).text("Update");
-      }
-    });
   });
 });
 
+$(".delete-product").on("click", function () {
+  console.log("clicked del:");
+  let product_id = $(this).attr("data-product");
+  let this_val = $(this);
+
+  $.ajax({
+    url: "/delete-from-cart",
+    data: {
+      id: product_id
+    },
+    dataType: "json",
+    beforeSend: function () {
+      this_val.attr("disabled", true).text("Deleting...");
+    },
+    success: function (response) {
+      this_val.attr("disabled", false).text("Delete");
+      $(".cart-item-count").text(response.totalcartitems);
+      $("#cart-list").html(response.data);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error deleting product:", error);
+      alert("An error occurred while deleting the product. Please try again.");
+      this_val.attr("disabled", false).text("Delete");
+    }
+  });
+});
