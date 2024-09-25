@@ -5,6 +5,7 @@ from django.db.models import Count, Avg
 from taggit.models import Tag
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 import warnings
@@ -278,6 +279,10 @@ def update_cart(request):
     })
     return JsonResponse({"data": context, 'totalcartitems': len(cart_data)})
 
-
+# @login_required
 def checkout_view(request):
-    return render(request, "ecom/checkout.html")
+    cart_total_amount = 0
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total_amount += int(item['qty']) * float(item['price'])       
+        return render(request, "ecom/checkout.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
