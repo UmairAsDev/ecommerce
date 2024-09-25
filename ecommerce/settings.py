@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'fontawesomefree',
+    'paypal.standard.ipn',
 
     # Custom app
     'ecom',
