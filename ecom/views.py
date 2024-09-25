@@ -277,3 +277,7 @@ def update_cart(request):
         'cart_total_amount': cart_total_amount
     })
     return JsonResponse({"data": context, 'totalcartitems': len(cart_data)})
+
+
+def checkout_view(request):
+    return render(request, "ecom/checkout.html")
