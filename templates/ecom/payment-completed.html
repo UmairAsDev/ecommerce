@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
+{% extends "partials/base.html" %}
+{% load static %}
 
-<head>
-    <meta charset="utf-8" />
-    <title>Nest - Multipurpose eCommerce HTML Template</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="" />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:image" content="" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.svg" />
-    <link rel="stylesheet" href="assets/css/main.css?v=6.0" />
-</head>
 
-<body>
+{% block content %}
     <div class="invoice invoice-content invoice-6">
         <div class="back-top-home hover-up mt-30 ml-30">
             <a class="hover-up" href="index.html"><i class="fi-rs-home mr-5"></i> Homepage</a>
@@ -28,12 +14,12 @@
                         <div class="invoice-info" id="invoice_wrapper">
                             <div class="invoice-header">
                                 <div class="invoice-icon">
-                                    <img src="assets/imgs/theme/icons/icon-invoice.svg" class="img-fluid" alt="">
+                                    <img src="{% static 'assets/imgs/theme/icons/icon-invoice.svg' %}" class="img-fluid" alt="">
                                 </div>
                                 <div class="row align-items-center">
                                     <div class="col-md-6">
                                         <div class="logo">
-                                            <a href="index.html" class="mr-20"><img src="assets/imgs/theme/logo.svg" alt="logo" /></a>
+                                            <a href="index.html" class="mr-20"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-end">
@@ -168,20 +154,12 @@
                             </div>
                         </div>
                         <div class="invoice-btn-section clearfix d-print-none">
-                            <a href="javascript:window.print()" class="btn btn-lg btn-custom btn-print hover-up"> <img src="assets/imgs/theme/icons/icon-print.svg" alt="" /> Print </a>
-                            <a id="invoice_download_btn" class="btn btn-lg btn-custom btn-download hover-up"> <img src="assets/imgs/theme/icons/icon-download.svg" alt="" /> Download </a>
+                            <a href="javascript:window.print()" class="btn btn-lg btn-custom btn-print hover-up"> <img src="{% static 'assets/imgs/theme/icons/icon-print.svg' %}" alt="" /> Print </a>
+                            <a id="invoice_download_btn" class="btn btn-lg btn-custom btn-download hover-up"> <img src="{% static 'assets/imgs/theme/icons/icon-download.svg' %}" alt="" /> Download </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Vendor JS-->
-    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <!-- Invoice JS -->
-    <script src="assets/js/invoice/jspdf.min.js"></script>
-    <script src="assets/js/invoice/invoice.js"></script>
-</body>
-
-</html>
+    {% endblock content %}
