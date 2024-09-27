@@ -12,6 +12,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.db.models import Q
 from django.contrib import messages
 from django.conf import settings
+from django.urls import reverse
 import warnings
 warnings.filterwarnings('ignore')
 # Create your views here.
@@ -283,27 +284,40 @@ def update_cart(request):
     })
     return JsonResponse({"data": context, 'totalcartitems': len(cart_data)})
 
-# @login_required
+@login_required
 def checkout_view(request):
     host = request.get_host()
-    paypal_dict = {
-        'business' : settings.PAYPAL_RECEVIER_EMAIL,
-        'amount':'200',
-        'item_name' : 'Mango',
-        'invoice' : 'INV-200',
-        'currency_code': 'USD',
-        'notify_url':'http://{}{}'.format(host.reverse('paypal-ipn')),
-        'return_url':'http://{}{}'.format(host.reverse('core:payment_done')),
-        'cancel_url':'http://{}{}'.format(host.reverse('core:payment_canceled')),
-    }
-    payment_button_form = PayPalPaymentsForm(initial=paypal_dict)
     
-    print("Host is #############3", request.get_host())
+    # Dynamically calculate total amount if needed
     cart_total_amount = 0
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
-            cart_total_amount += int(item['qty']) * float(item['price'])       
-        return render(request, "ecom/checkout.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
+            cart_total_amount += int(item['qty']) * float(item['price'])
+
+    # Setup PayPal dict with dynamic amount
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': str(cart_total_amount),  # Use the calculated cart total
+        'item_name': 'Order-item-No-1',
+        'invoice': 'Invoice_No_1',
+        'currency_code': 'USD',
+        'notify_url': 'http://{}/paypal/'.format(host),
+        'return_url': request.build_absolute_uri(reverse('ecom:payment-completed')),
+        'cancel_url': request.build_absolute_uri(reverse('ecom:payment-failed')),
+    }
+    
+    # PayPal Payment Form
+    payment_button_form = PayPalPaymentsForm(initial=paypal_dict)
+
+    print("Host is #############", request.get_host())
+    
+    # Render checkout template
+    return render(request, "ecom/checkout.html", {
+        'cart_data': request.session.get('cart_data_obj', {}),
+        'totalcartitems': len(request.session.get('cart_data_obj', {})),
+        'cart_total_amount': cart_total_amount,
+        'payment_button_form': payment_button_form
+    })
     
 @csrf_exempt  
 def payment_completed_view(request):
@@ -317,3 +331,5 @@ def payment_completed_view(request):
 def payment_failed_view(request):
     return render(request, "ecom/payment-failed.html")
 
+
+### password: iZJk%3&=

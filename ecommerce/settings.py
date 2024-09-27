@@ -161,6 +161,7 @@ JAZZMIN_SETTINGS = {
     'copyright': "www.ecomdiverse.com",
 }
 
+LOGIN_URL = "userauths:sign-in"
 AUTH_USER_MODEL = 'userauths.User'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
