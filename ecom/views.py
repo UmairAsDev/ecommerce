@@ -3,12 +3,15 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Count, Avg
 from taggit.models import Tag
+from django.http import HttpResponse
 from ecom.models import Products, Category, Vendor, CartOrder, CartOrderItems, Wishlist, ProductImages, ProductReview, Address
 from ecom.forms import ProductReviewForm 
 from django.contrib.auth.decorators import login_required 
 from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
 from django.db.models import Q
 from django.contrib import messages
+from django.conf import settings
 import warnings
 warnings.filterwarnings('ignore')
 # Create your views here.
@@ -282,6 +285,20 @@ def update_cart(request):
 
 # @login_required
 def checkout_view(request):
+    host = request.get_host()
+    paypal_dict = {
+        'business' : settings.PAYPAL_RECEVIER_EMAIL,
+        'amount':'200',
+        'item_name' : 'Mango',
+        'invoice' : 'INV-200',
+        'currency_code': 'USD',
+        'notify_url':'http://{}{}'.format(host.reverse('paypal-ipn')),
+        'return_url':'http://{}{}'.format(host.reverse('core:payment_done')),
+        'cancel_url':'http://{}{}'.format(host.reverse('core:payment_canceled')),
+    }
+    payment_button_form = PayPalPaymentsForm(initial=paypal_dict)
+    
+    print("Host is #############3", request.get_host())
     cart_total_amount = 0
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
