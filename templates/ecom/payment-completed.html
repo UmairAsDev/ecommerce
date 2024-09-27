@@ -101,7 +101,7 @@
                                             {% endfor %}
                                             <tr>
                                                 <td colspan="3" class="text-end f-w-600">SubTotal</td>
-                                                <td class="text-right">$1710.99</td>
+                                                <td class="text-right">${{cart_total_amount|floatformat:2}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="text-end f-w-600">Tax</td>
@@ -109,7 +109,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="text-end f-w-600">Grand Total</td>
-                                                <td class="text-right f-w-600">$1795.99</td>
+                                                <td class="text-right f-w-600">${{cart_total_amount|floatformat:2}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="col-md-6 text-end">
                                         <h6 class="mb-15">Total Amount</h6>
-                                        <h3 class="mt-0 mb-0 text-brand">$1795.99</h3>
+                                        <h3 class="mt-0 mb-0 text-brand">${{cart_total_amount|floatformat:2}}</h3>
                                         <p class="mb-0 text-muted">Taxes Included</p>
                                     </div>
                                 </div>

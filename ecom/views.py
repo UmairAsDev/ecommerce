@@ -322,10 +322,10 @@ def checkout_view(request):
 @csrf_exempt  
 def payment_completed_view(request):
     cart_total_amount = 0
-    for product_id, item in request.session['cart_data_obj']:
-        cart_total_amount += int(item['qty']) * float(item['price'])
-    context = request.POST
-    return render(request, "ecom/payment-completed.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'context':context})
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total_amount += int(item['qty']) * float(item['price'])
+    return render(request, "ecom/payment-completed.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
 
 @csrf_exempt
 def payment_failed_view(request):
