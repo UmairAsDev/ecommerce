@@ -286,15 +286,33 @@ def update_cart(request):
 
 @login_required
 def checkout_view(request):
-    host = request.get_host()
     
-    # Dynamically calculate total amount if needed
     cart_total_amount = 0
+    total_amount = 0
+    # Checking cart_data_obj is still exist or not
     if 'cart_data_obj' in request.session:
+        
+        # Getting total amount for paypal Amount
+        for p_id, item in request.session['cart_data_obj'].items():
+            total_amount += int(item['qty']) * float(item['price'])
+        
+        # Create Order 
+        order = CartOrder.objects.create(
+            user=request.user,
+            price=total_amount
+        )
+        # Getting total amount for the cart
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price'])
+            
+            cart_total_products = CartOrderItems.objects.create(
+                order=order,
+                invoice_number = "INVOICE_NO-" + str(order.id),# return INVOICE NO
+                item=item['title']
+            )
 
     # Setup PayPal dict with dynamic amount
+    host = request.get_host()
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': str(cart_total_amount),  # Use the calculated cart total
@@ -319,7 +337,7 @@ def checkout_view(request):
         'payment_button_form': payment_button_form
     })
     
-@csrf_exempt  
+@login_required
 def payment_completed_view(request):
     cart_total_amount = 0
     if 'cart_data_obj' in request.session:
@@ -327,7 +345,7 @@ def payment_completed_view(request):
             cart_total_amount += int(item['qty']) * float(item['price'])
     return render(request, "ecom/payment-completed.html", {'cart_data':request.session['cart_data_obj'], 'totalcartitems':len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
 
-@csrf_exempt
+@login_required
 def payment_failed_view(request):
     return render(request, "ecom/payment-failed.html")
 

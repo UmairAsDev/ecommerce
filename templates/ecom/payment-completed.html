@@ -103,10 +103,10 @@
                                                 <td colspan="3" class="text-end f-w-600">SubTotal</td>
                                                 <td class="text-right">${{cart_total_amount|floatformat:2}}</td>
                                             </tr>
-                                            <tr>
+                                            {% comment %} <tr>
                                                 <td colspan="3" class="text-end f-w-600">Tax</td>
                                                 <td class="text-right">$85.99</td>
-                                            </tr>
+                                            </tr> {% endcomment %}
                                             <tr>
                                                 <td colspan="3" class="text-end f-w-600">Grand Total</td>
                                                 <td class="text-right f-w-600">${{cart_total_amount|floatformat:2}}</td>
@@ -120,9 +120,7 @@
                                     <div class="col-md-6">
                                         <h6 class="mb-15">Invoice Infor</h6>
                                         <p class="font-sm">
-                                            <strong>Issue date:</strong> 20 march, 2024<br />
-                                            <strong>Invoice To:</strong> NestMart Inc<br />
-                                            <strong>Swift Code:</strong> BFTV VNVXS
+                                            <strong>Invoice To:</strong> {{request.user|title}}<br />
                                         </p>
                                     </div>
                                     <div class="col-md-6 text-end">
@@ -134,7 +132,7 @@
                                 <div class="row text-center">
                                     <div class="col-12">
                                         <div class="hr mt-30 mb-30"></div>
-                                        <p class="mb-0 text-muted"><strong>Note:</strong>This is computer generated receipt and does not require physical signature.</p>
+                                        <p class="mb-0 text-muted"><strong>Hey {{request.user|title}}</strong>Thanks for shopping at EcomDiverse.</p>
                                     </div>
                                 </div>
                             </div>
