@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 
 
 STATUS_CHOICE = (
-    ("process" , "processing"),
+    ("processing" , "processing"),
     ("shiped" , "Shiped"),
     ("delivered" , "Delivered"),
 )

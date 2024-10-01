@@ -308,7 +308,11 @@ def checkout_view(request):
             cart_total_products = CartOrderItems.objects.create(
                 order=order,
                 invoice_number = "INVOICE_NO-" + str(order.id),# return INVOICE NO
-                item=item['title']
+                item=item['title'],
+                image=item['image'],
+                qty=item['qty'],
+                price=item['price'],
+                total=float(item['qty']) * float(item['price'])
             )
 
     # Setup PayPal dict with dynamic amount
@@ -316,8 +320,8 @@ def checkout_view(request):
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': str(cart_total_amount),  # Use the calculated cart total
-        'item_name': 'Order-item-No-1',
-        'invoice': 'Invoice_No_1',
+        'item_name': 'Order-item-No-' + str(order.id),
+        'invoice': 'INVOICE_NO-' + str(order.id),
         'currency_code': 'USD',
         'notify_url': 'http://{}/paypal/'.format(host),
         'return_url': request.build_absolute_uri(reverse('ecom:payment-completed')),
