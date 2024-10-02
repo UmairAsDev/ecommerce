@@ -45,5 +45,7 @@ urlpatterns = [
     # payment-completd
     path("payment-completed/", views.payment_completed_view, name="payment-completed"),
     # payemnt-failed
-    path("payment-failed/", views.payment_failed_view, name="payment-failed")
+    path("payment-failed/", views.payment_failed_view, name="payment-failed"),
+    # Dashboard
+    path("dashboard/", views.customer_dashboard, name = "dashboard")
 ]
